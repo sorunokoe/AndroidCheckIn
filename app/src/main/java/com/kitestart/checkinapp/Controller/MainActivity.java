@@ -1,7 +1,12 @@
 package com.kitestart.checkinapp.Controller;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -12,6 +17,8 @@ import com.kitestart.checkinapp.View.PlacesAdapter;
 public class MainActivity extends AppCompatActivity {
 
     ListView placesList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,30 @@ public class MainActivity extends AppCompatActivity {
         placesList.setAdapter(adapter);
 
         setData();
+
+
+
+
+
+        placesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Intent intent = new Intent(getApplicationContext(), MapPlaceActivity.class);
+
+                intent.putExtra("index", position);
+
+
+                startActivity(intent);
+
+
+
+
+            }
+        });
+
+
 
     }
 
@@ -42,4 +73,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.addNewPlace:
+
+                Intent intent = new Intent(getApplicationContext(), MapPlaceActivity.class);
+                startActivity(intent);
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
